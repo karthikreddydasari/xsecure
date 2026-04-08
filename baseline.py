@@ -32,8 +32,8 @@ from models import IncidentAction, IncidentObservation
 # Configuration
 # ---------------------------------------------------------------------------
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-ENV_URL        = os.getenv("ENV_URL", "http://localhost:8000")
+API_KEY = os.getenv("API_KEY", "")
+ENV_URL        = os.getenv("API_BASE_URL", "http://localhost:8000")
 MODEL_NAME     = os.getenv("BASELINE_MODEL", "gpt-4o-mini")
 NUM_EPISODES   = int(os.getenv("NUM_EPISODES", "3"))
 
