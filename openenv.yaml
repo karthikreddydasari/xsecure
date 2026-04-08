@@ -1,0 +1,68 @@
+name: xsecure
+version: "1.0.0"
+description: >
+  Autonomous Incident Response & Threat Mitigation RL environment.
+  Agents investigate evolving cyber threats and take sequential actions
+  to detect and mitigate attacks before system compromise.
+  Supports 3 tasks of increasing difficulty.
+author: your-hf-username
+tags:
+  - openenv
+  - cybersecurity
+  - incident-response
+  - multi-step
+  - agentic
+
+server:
+  host: 0.0.0.0
+  port: 7860
+  workers: 4
+
+env:
+  TASK_ID: "1"
+  MAX_CONCURRENT_ENVS: "100"
+
+actions:
+  - name: analyze_log
+    description: "Analyze a specific log entry by ID (e.g. L001)"
+    params:
+      target: string
+  - name: trace_user
+    description: "Investigate a user's activity"
+    params:
+      target: string
+  - name: block_ip
+    description: "Block a suspicious IP address"
+    params:
+      target: string
+  - name: disable_account
+    description: "Disable a compromised user account"
+    params:
+      target: string
+  - name: restart_service
+    description: "Restart a degraded or compromised service"
+    params:
+      target: string
+  - name: ignore
+    description: "Take no action (penalised — attack progresses)"
+    params:
+      target: ""
+
+tasks:
+  - id: 1
+    name: "Brute Force Detection"
+    difficulty: easy
+    max_steps: 12
+    score_range: [0.0, 1.0]
+
+  - id: 2
+    name: "Suspicious Login — Account Takeover"
+    difficulty: medium
+    max_steps: 14
+    score_range: [0.0, 1.0]
+
+  - id: 3
+    name: "Multi-Stage APT Kill Chain"
+    difficulty: hard
+    max_steps: 18
+    score_range: [0.0, 1.0]
