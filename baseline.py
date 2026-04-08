@@ -37,11 +37,11 @@ ENV_URL        = os.getenv("API_BASE_URL", "http://localhost:8000")
 MODEL_NAME     = os.getenv("BASELINE_MODEL", "gpt-4o-mini")
 NUM_EPISODES   = int(os.getenv("NUM_EPISODES", "3"))
 
-if not OPENAI_API_KEY:
-    print("ERROR: OPENAI_API_KEY environment variable is not set.", file=sys.stderr)
+if not API_KEY:
+    print("ERROR: API_KEY environment variable is not set.", file=sys.stderr)
     sys.exit(1)
 
-client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+client = AsyncOpenAI(api_key= API_KEY)
 
 # ---------------------------------------------------------------------------
 # System prompt
