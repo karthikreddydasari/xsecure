@@ -28,11 +28,20 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-
+"""
 API_KEY      = os.getenv("API_KEY", "")
 API_BASE_URL = os.getenv("API_BASE_URL")
 MODEL_NAME   = os.getenv("MODEL_NAME")
 ENV_URL      = os.getenv("ENV_URL", "http://localhost:7860")
+BENCHMARK    = "xsecure"
+MAX_STEPS    = 20
+"""
+
+API_BASE_URL = os.environ.get("API_BASE_URL",  "https://api.openai.com/v1")
+MODEL_NAME   = os.environ.get("MODEL_NAME",  "gpt-4o-mini")
+API_KEY      = os.environ.get("API_KEY", "")
+ENV_URL      = os.environ.get("ENV_URL", "http://localhost:7860")
+
 BENCHMARK    = "xsecure"
 MAX_STEPS    = 20
 
