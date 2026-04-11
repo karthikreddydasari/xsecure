@@ -128,7 +128,7 @@ def _parse_action(text: str) -> IncidentAction:
         pass
     return IncidentAction(action_type="ignore", target="")
 
-async def _get_action(conversation: List[Dict], obs: IncidentObservation) -> IncidentAction:
+def _get_action(conversation: List[Dict], obs: IncidentObservation) -> IncidentAction:
     conversation.append({"role": "user", "content": _format_observation(obs)})
     
     response = await llm.chat.completions.create(
@@ -148,7 +148,7 @@ async def _get_action(conversation: List[Dict], obs: IncidentObservation) -> Inc
 
 TASK_NAMES = {1: "brute-force-easy", 2: "suspicious-login-medium", 3: "multi-stage-apt-hard"}
 
-async def run_episode(task_id: int) -> None:
+def run_episode(task_id: int) -> None:
     task_name = TASK_NAMES.get(task_id, f"task-{task_id}")
     rewards: List[float] = []
     steps_taken = 0
@@ -159,7 +159,7 @@ async def run_episode(task_id: int) -> None:
     log_start(task=task_name, env=BENCHMARK, model=MODEL_NAME)
 
     try:
-        async with IncidentResponseEnv(base_url=ENV_URL) as env:
+        with IncidentResponseEnv(base_url=ENV_URL) as env:
             obs = await env.reset(task_id=task_id)
 
             for step in range(1, MAX_STEPS + 1):
@@ -195,7 +195,7 @@ async def run_episode(task_id: int) -> None:
 # Main
 # ---------------------------------------------------------------------------
 
-async def main():
+def main():
     task_ids_str = os.getenv("TASK_IDS", "1,2,3")
     task_ids = [int(t.strip()) for t in task_ids_str.split(",") if t.strip()]
     for task_id in task_ids:
