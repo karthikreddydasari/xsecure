@@ -29,10 +29,10 @@ load_dotenv()
 # Configuration
 # ---------------------------------------------------------------------------
 
-API_KEY      = os.getenv("API_KEY", "")
-API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
-MODEL_NAME   = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
-ENV_URL      = os.getenv("ENV_URL", "http://localhost:7860")
+API_KEY      = os.environ("API_KEY", "")
+API_BASE_URL = os.environ("API_BASE_URL", "https://router.huggingface.co/v1")
+MODEL_NAME   = os.environ("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
+ENV_URL      = os.environ("ENV_URL", "http://localhost:7860")
 BENCHMARK    = "xsecure"
 MAX_STEPS    = 20
 
