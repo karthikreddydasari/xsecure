@@ -17,7 +17,7 @@ import sys
 from typing import Dict, List, Optional, Any
 
 from dotenv import load_dotenv
-from openai import AsyncOpenAI
+from openai import OpenAI
 
 from client import IncidentResponseEnv, StepResult
 from models import IncidentAction, IncidentObservation
@@ -50,7 +50,7 @@ if not API_KEY:
     sys.exit(1)
 
 # Use AsyncOpenAI to prevent blocking the event loop
-llm = AsyncOpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+llm = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
 
 # ---------------------------------------------------------------------------
 # Mandatory stdout loggers (Fixed spacing to match spec)
