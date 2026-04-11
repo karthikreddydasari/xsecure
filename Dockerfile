@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY models.py      .
 COPY client.py      .
 COPY graders.py     .
+COPY tasks.py       .
+COPY inference.py   .
+COPY baseline.py    .
 COPY __init__.py    .
 COPY openenv.yaml   .
 COPY server/        server/
