@@ -164,7 +164,7 @@ def run_episode(task_id: int) -> None:
     log_start(task=task_name, env=BENCHMARK, model=MODEL_NAME)
 
     try:
-        async with IncidentResponseEnv(base_url=ENV_URL) as env:
+        with IncidentResponseEnv(base_url=ENV_URL) as env:
             obs = env.reset(task_id=task_id)
 
             for step in range(1, MAX_STEPS + 1):
