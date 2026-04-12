@@ -23,7 +23,7 @@ from client import IncidentResponseEnv, StepResult
 from models import IncidentAction, IncidentObservation
 
 # Load .env for local dev
-load_dotenv()
+#load_dotenv()
 
 # ---------------------------------------------------------------------------
 # Configuration
