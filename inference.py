@@ -131,7 +131,7 @@ def _parse_action(text: str) -> IncidentAction:
 def _get_action(conversation: List[Dict], obs: IncidentObservation) -> IncidentAction:
     conversation.append({"role": "user", "content": _format_observation(obs)})
     
-    response = await llm.chat.completions.create(
+    response = llm.chat.completions.create(
         model=MODEL_NAME,
         messages=[{"role": "system", "content": SYSTEM_PROMPT}] + conversation,
         max_tokens=256,
@@ -160,12 +160,12 @@ def run_episode(task_id: int) -> None:
 
     try:
         with IncidentResponseEnv(base_url=ENV_URL) as env:
-            obs = await env.reset(task_id=task_id)
+            obs = env.reset(task_id=task_id)
 
             for step in range(1, MAX_STEPS + 1):
                 # Now awaited correctly
-                action = await _get_action(conversation, obs)
-                result = await env.step(action)
+                action = _get_action(conversation, obs)
+                result = env.step(action)
 
                 rewards.append(result.reward)
                 steps_taken = step
@@ -199,7 +199,7 @@ def main():
     task_ids_str = os.getenv("TASK_IDS", "1,2,3")
     task_ids = [int(t.strip()) for t in task_ids_str.split(",") if t.strip()]
     for task_id in task_ids:
-        await run_episode(task_id)
+        run_episode(task_id)
 
 if __name__ == "__main__":
     main()
