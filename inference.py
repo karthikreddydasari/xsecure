@@ -37,7 +37,7 @@ BENCHMARK    = "xsecure"
 MAX_STEPS    = 20
 """
 
-API_BASE_URL = os.environ.get("API_BASE_URL",  "https://api.openai.com/v1")
+API_BASE_URL = os.environ["API_BASE_URL"]
 MODEL_NAME   = os.environ.get("MODEL_NAME",  "gpt-4o-mini")
 API_KEY      = os.environ.get("API_KEY", "")
 ENV_URL      = os.environ.get("ENV_URL", "http://localhost:7860")
@@ -100,9 +100,14 @@ Your goal is to investigate logs and alerts, identify the threat, and mitigate i
 
 def _format_observation(obs: IncidentObservation) -> str:
     # Use dot notation as expected by the environment models
-    logs_txt     = "\n".join(f"  [{l.log_id}] {l.timestamp} — {l.message}" for l in obs.logs)
+  """  logs_txt     = "\n".join(f"  [{l.log_id}] {l.timestamp} — {l.message}" for l in obs.logs)
     alerts_txt   = "\n".join(f"  [{a.severity.upper()}] {a.message}" for a in obs.alerts)
-    services_txt = "\n".join(f"  {s.name}: {s.status}" for s in obs.services)
+    services_txt = "\n".join(f"  {s.name}: {s.status}" for s in obs.services) 
+    """
+
+    logs_txt     = "\n".join(f"  [{l['log_id']}] {l['timestamp']} — {l['message']}" for l in obs.logs)
+    alerts_txt   = "\n".join(f"  [{a['severity'].upper()}] {a.message}" for a in obs.alerts)
+    services_txt = "\n".join(f"  {s['name']}: {s['status']}" for s in obs.services)
     
     return (
         f"=== Incident Dashboard (Step {obs.step_count}) ===\n\n"
@@ -159,7 +164,7 @@ def run_episode(task_id: int) -> None:
     log_start(task=task_name, env=BENCHMARK, model=MODEL_NAME)
 
     try:
-        with IncidentResponseEnv(base_url=ENV_URL) as env:
+        async with IncidentResponseEnv(base_url=ENV_URL) as env:
             obs = env.reset(task_id=task_id)
 
             for step in range(1, MAX_STEPS + 1):
